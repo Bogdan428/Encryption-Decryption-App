@@ -3,56 +3,56 @@ from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_OAEP, AES
 from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad, unpad
-import base64
-import psutil
-import time
-import tracemalloc
-import streamlit as st
-
-# Function to display system stats
-def display_stats():
-    cpu_usage = psutil.cpu_percent(interval=1)
-    memory_info = psutil.virtual_memory()
-    memory_usage = memory_info.used / (1024 ** 2)
-    memory_total = memory_info.total / (1024 ** 2)
-    st.metric(label="CPU Usage (%)", value=f"{cpu_usage:.2f}")
-    st.metric(label="Memory Usage (MB)", value=f"{memory_usage:.2f} / {memory_total:.2f}")
-
-# Adding a new tab in Streamlit
-st.sidebar.title("Navigation")
-app_mode = st.sidebar.selectbox(
-    "Choose the app mode",
-    [
-        "Home",
-        "Encryption Stats",
-        # Other modes
-    ],
-)
-
-if app_mode == "Encryption Stats":
-    st.title("Real-time Encryption Statistics")
-    st.write("This tab shows system resource usage during encryption.")
-
-    # Start monitoring
-    if st.button("Start Monitoring"):
-        tracemalloc.start()
-        start_time = time.time()
-
-        # Example encryption task
-        success, encrypted_message = encrypt_message_rsa(public_key, message)
-
-        end_time = time.time()
-        current, peak = tracemalloc.get_traced_memory()
-
-        tracemalloc.stop()
-
-        # Display results
-        if success:
-            st.write(f"Encryption Time: {end_time - start_time:.6f} seconds")
-            st.write(f"Peak Memory Usage: {peak / 1024:.2f} KB")
-            display_stats()
-        else:
-            st.error("Encryption failed.")
+# import base64
+# import psutil
+# import time
+# import tracemalloc
+# import streamlit as st
+# #
+# # Function to display system stats
+# def display_stats():
+#     cpu_usage = psutil.cpu_percent(interval=1)
+#     memory_info = psutil.virtual_memory()
+#     memory_usage = memory_info.used / (1024 ** 2)
+#     memory_total = memory_info.total / (1024 ** 2)
+#     st.metric(label="CPU Usage (%)", value=f"{cpu_usage:.2f}")
+#     st.metric(label="Memory Usage (MB)", value=f"{memory_usage:.2f} / {memory_total:.2f}")
+#
+# # Adding a new tab in Streamlit
+# st.sidebar.title("Navigation")
+# app_mode = st.sidebar.selectbox(
+#     "Choose the app mode",
+#     [
+#         "Home",
+#         "Encryption Stats",
+#         # Other modes
+#     ],
+# )
+#
+# if app_mode == "Encryption Stats":
+#     st.title("Real-time Encryption Statistics")
+#     st.write("This tab shows system resource usage during encryption.")
+#
+#     # Start monitoring
+#     if st.button("Start Monitoring"):
+#         tracemalloc.start()
+#         start_time = time.time()
+#
+#         # Example encryption task
+#         success, encrypted_message = encrypt_message_rsa(public_key, message)
+#
+#         end_time = time.time()
+#         current, peak = tracemalloc.get_traced_memory()
+#
+#         tracemalloc.stop()
+#
+#         # Display results
+#         if success:
+#             st.write(f"Encryption Time: {end_time - start_time:.6f} seconds")
+#             st.write(f"Peak Memory Usage: {peak / 1024:.2f} KB")
+#             display_stats()
+#         else:
+#             st.error("Encryption failed.")
 
 
 
